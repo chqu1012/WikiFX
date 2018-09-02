@@ -28,6 +28,24 @@ public class WikiPageController extends BaseWikiPageController {
 	
 	private WikiPage currentPage;
 
+	private Parser parser;
+
+	private HtmlRenderer renderer;
+
+	@Override
+	public void initialize() {
+		super.initialize();
+		LinkedList<Extension> extensions = new LinkedList<Extension>();
+	    extensions.add(TablesExtension.create());
+	    extensions.add(AttributesExtension.create());
+	    extensions.add(WikiLinkExtension.create());
+	    extensions.add(TaskListExtension.create());
+	    
+		parser = Parser.builder().extensions(extensions).build();
+		renderer = HtmlRenderer.builder().extensions(extensions).build();
+		textArea.textProperty().addListener(o ->parseContent());
+	}
+	
 	@Override
 	protected void onSaveWikiPageButton(ActionEvent event) {
         parseContent(); 
@@ -40,17 +58,11 @@ public class WikiPageController extends BaseWikiPageController {
 	}
 
 	private void parseContent() {
-		LinkedList<Extension> extensions = new LinkedList<Extension>();
-	    extensions.add(TablesExtension.create());
-	    extensions.add(AttributesExtension.create());
-	    extensions.add(WikiLinkExtension.create());
-	    extensions.add(TaskListExtension.create());
-	    
-		Parser parser = Parser.builder().extensions(extensions).build();
         Node document = parser.parse(textArea.getText());
-        HtmlRenderer renderer = HtmlRenderer.builder().extensions(extensions).build();
         String html = renderer.render(document);
-        engine.loadContent(getContent(html), "text/html");
+        String content = getContent(html);
+		previewEngine.loadContent(content, "text/html");
+        engine.loadContent(content, "text/html");
 	}
 	
 	public void setWikiPage(WikiPage wikiPage) {

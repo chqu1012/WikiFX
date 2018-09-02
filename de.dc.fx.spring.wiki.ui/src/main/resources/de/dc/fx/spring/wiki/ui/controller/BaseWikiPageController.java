@@ -3,6 +3,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
@@ -13,6 +14,7 @@ public abstract class BaseWikiPageController {
 
 	@FXML AnchorPane root;
 	@FXML Label titleLabel;
+	@FXML SplitPane editorSplitPane;
 	
 	@FXML 
 	protected TabPane tabPane;
@@ -27,6 +29,7 @@ public abstract class BaseWikiPageController {
     protected abstract void onSaveWikiPageButton(ActionEvent event);
 
     protected WebEngine engine;
+    protected WebEngine previewEngine;
     
 	public void initialize() {
 		Platform.runLater(() -> {
@@ -37,7 +40,9 @@ public abstract class BaseWikiPageController {
 			AnchorPane.setLeftAnchor(view, 0d);
 			AnchorPane.setRightAnchor(view, 0d);
 			previewPane.getChildren().add(view);
-			
+			WebView preview = new WebView();
+			previewEngine = preview.getEngine();
+			editorSplitPane.getItems().add(preview);
 		});
 	}
 
