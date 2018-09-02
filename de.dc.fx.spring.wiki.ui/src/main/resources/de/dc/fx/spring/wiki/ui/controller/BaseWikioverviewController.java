@@ -3,18 +3,18 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 
-public abstract class BaseWikioverviewController {
+public abstract class BaseWikioverviewController<T> {
 
     @FXML
-    protected ListView<?> lastCreateListView;
+    protected ListView<T> lastCreateListView;
 
     @FXML
-    protected ListView<?> lastUpdatedListView;
+    protected ListView<T> lastUpdatedListView;
 
     @FXML
-    protected ListView<?> mostVisitedListView;
+    protected ListView<T> mostVisitedListView;
 
     @FXML
-    protected TableView<?> wikiTableView;
+    protected TableView<T> wikiTableView;
 
 }

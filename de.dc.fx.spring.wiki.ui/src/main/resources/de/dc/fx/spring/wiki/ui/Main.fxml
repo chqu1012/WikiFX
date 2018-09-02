@@ -8,12 +8,13 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import de.dc.fx.spring.wiki.ui.control.TreeViewer?>
+<?import javafx.scene.control.Button?>
 
 <BorderPane fx:controller="de.dc.fx.spring.wiki.ui.controller.MainController" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@css/Main.css" xmlns="http://javafx.com/javafx/8.0.162" xmlns:fx="http://javafx.com/fxml/1">
    <left>
       <TreeViewer fx:id="treeView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
       	         <contextMenu>
-            <ContextMenu>
+            <ContextMenu> 
               <items>
                   <MenuItem mnemonicParsing="false" text="Edit" />
                   <MenuItem mnemonicParsing="false" text="Delete" />
@@ -47,8 +48,8 @@
    <center>
       <AnchorPane fx:id="contentPane" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
       	 <children>
-            <fx:include source="Wikioverview.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
-            <fx:include source="WikiPage.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+            <fx:include fx:id="wikiPage" source="WikiPage.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+            <fx:include fx:id="wikiOverview" source="Wikioverview.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
          </children>
       </AnchorPane>
    </center>
@@ -65,7 +66,12 @@
                   <Insets left="10.0" top="10.0" />
                </HBox.margin>
             </TextField>
-            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Label" HBox.hgrow="ALWAYS" />
+            <Button text="Neue Seite" styleClass="btn" onAction="#onNewPageButton">
+            	<HBox.margin>
+                  <Insets left="10.0" top="10.0" />
+               </HBox.margin>
+            </Button>
+            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="" HBox.hgrow="ALWAYS" />
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@img/icons8_User_96px.png" />

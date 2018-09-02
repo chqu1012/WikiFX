@@ -1,22 +1,34 @@
 package de.dc.fx.spring.wiki.ui.controller;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import de.dc.fx.spring.wiki.ui.control.provider.TreeViewContentProvider;
 import de.dc.fx.spring.wiki.ui.control.provider.TreeViewerLabelProvider;
 import de.dc.fx.spring.wiki.ui.model.NavigationModel;
+import de.dc.fx.spring.wiki.ui.model.WikiPage;
 import de.dc.fx.spring.wiki.ui.provider.NavigationModelProvider;
 import de.dc.fx.spring.wiki.ui.repository.NavigationModelRepository;
+import de.dc.fx.spring.wiki.ui.repository.WikiPageRepository;
+import de.dc.fx.spring.wiki.ui.util.WikiPageUtil;
 import javafx.event.ActionEvent;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TreeItem;
+import javafx.fxml.FXML;
 
 @Controller
 public class MainController extends BaseMainController<NavigationModel> {
 
-	@Autowired
-	NavigationModelRepository navigationModelRepository;
+	@Autowired NavigationModelRepository navigationModelRepository;
+	@Autowired WikiPageRepository wikiPageRepository;
 
+	@Autowired WikiPageUtil wikiPageUtil;
+	
+	@Autowired WikiPageController wikiPageController;
+	
 	NavigationModelProvider provider = new NavigationModelProvider();
 
 	public void initialize() {
@@ -76,5 +88,26 @@ public class MainController extends BaseMainController<NavigationModel> {
 	private void expandNodeAndChilren(TreeItem<NavigationModel> node) {
 		node.setExpanded(true);
 		node.getChildren().forEach(this::expandNodeAndChilren);
+	}
+
+	@FXML public void onNewPageButton(ActionEvent event) {
+		TextInputDialog dialog = new TextInputDialog("Neue Seite*");
+		dialog.setTitle("Text Input Dialog");
+		dialog.setHeaderText("Text Input Dialog");
+		dialog.setContentText("Bitte geben sie einen Namen für die neue Seite ein:");
+
+		Optional<String> result = dialog.showAndWait();
+		result.ifPresent(name ->{
+			WikiPage page = new WikiPage(name, LocalDateTime.now());
+			wikiPageRepository.save(page);
+			wikiPageUtil.createFolder(page);
+			wikiPageToFront(page);
+		});
+		
+	}
+
+	public void wikiPageToFront(WikiPage page) {
+		wikiPage.toFront();
+		wikiPageController.setWikiPage(page);
 	}
 }

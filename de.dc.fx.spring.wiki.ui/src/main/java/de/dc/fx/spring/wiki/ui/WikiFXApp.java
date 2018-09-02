@@ -28,8 +28,6 @@ public class WikiFXApp extends Application {
         fxmlLoader = new FXMLLoader(getClass().getResource("Main.fxml"));
         fxmlLoader.setControllerFactory(springContext::getBean);
         root = fxmlLoader.load();
-        
-//        FolderUtil.copyThirdLIbaries();
     }
 
     @Override

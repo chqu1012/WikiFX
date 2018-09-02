@@ -2,6 +2,7 @@ package de.dc.fx.spring.wiki.ui.controller;
 
 import java.util.LinkedList;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.vladsch.flexmark.Extension;
@@ -12,74 +13,78 @@ import com.vladsch.flexmark.ext.tables.TablesExtension;
 import com.vladsch.flexmark.ext.wikilink.WikiLinkExtension;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
-import com.vladsch.flexmark.util.options.MutableDataSet;
 
-import javafx.application.Platform;
+import de.dc.fx.spring.wiki.ui.model.WikiPage;
+import de.dc.fx.spring.wiki.ui.util.WikiPageUtil;
 import javafx.event.ActionEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
+import javafx.fxml.FXML;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 @Controller
 public class WikiPageController extends BaseWikiPageController {
 
-	private WebEngine engine;
-//	protected List<Extension> extensions = Arrays.asList(TablesExtension.create());
+	@Autowired WikiPageUtil wikiPageUtil;
 	
-	public void initialize() {
-		Platform.runLater(() -> {
-			WebView view = new WebView();
-			engine = view.getEngine();
-			AnchorPane.setBottomAnchor(view, 0d);
-			AnchorPane.setTopAnchor(view, 0d);
-			AnchorPane.setLeftAnchor(view, 0d);
-			AnchorPane.setRightAnchor(view, 0d);
-			previewPane.getChildren().add(view);
-			
-		});
-	}
-	
+	private WikiPage currentPage;
+
 	@Override
 	protected void onSaveWikiPageButton(ActionEvent event) {
+        parseContent(); 
+        
+        if (currentPage!=null) {
+        	wikiPageUtil.writeWikiPageContent(currentPage, textArea.getText());
+		}
+        
+        tabPane.getSelectionModel().selectFirst();
+	}
+
+	private void parseContent() {
 		LinkedList<Extension> extensions = new LinkedList<Extension>();
 	    extensions.add(TablesExtension.create());
 	    extensions.add(AttributesExtension.create());
 	    extensions.add(WikiLinkExtension.create());
-//	    extensions.add(TocExtension.create());
 	    extensions.add(TaskListExtension.create());
-//	    extensions.add(StrikethroughExtension.create());
-//	    extensions.add(MacroExtension.create());
-//	    extensions.add(JiraConverterExtension.create());
-//	    extensions.add(EscapedCharacterExtension.create());
-//	    extensions.add(EnumeratedReferenceExtension.create());
-//	    extensions.add(EmojiExtension.create());
-//	    extensions.add(DefinitionExtension.create());
-//	    extensions.add(AutolinkExtension.create());
-//	    extensions.add(AbbreviationExtension.create());
 	    
-        MutableDataSet options = new MutableDataSet();
-        // change soft break to hard break
-        options.set(HtmlRenderer.SOFT_BREAK, "<br/>");
-        options.set(HtmlRenderer.ESCAPE_HTML, true);
-        
-        MutableDataSet dataSet = new MutableDataSet();
-        dataSet.set(TablesExtension.TRIM_CELL_WHITESPACE, false);
-        dataSet.set(TablesExtension.HEADER_SEPARATOR_COLUMN_MATCH, false);
-        dataSet.set(Parser.EXTENSIONS, extensions);
-        
-        Parser parser = Parser.builder(dataSet).build();
+		Parser parser = Parser.builder().extensions(extensions).build();
         Node document = parser.parse(textArea.getText());
-        HtmlRenderer renderer = HtmlRenderer.builder(options).build();
+        HtmlRenderer renderer = HtmlRenderer.builder().extensions(extensions).build();
         String html = renderer.render(document);
-        engine.loadContent(html); 
+        engine.loadContent(getContent(html), "text/html");
+	}
+	
+	public void setWikiPage(WikiPage wikiPage) {
+		this.currentPage=wikiPage;
+		String content = wikiPageUtil.getWikiPageContent(wikiPage);
+		textArea.setText(content);
+		parseContent();
+		root.requestFocus();
+	}
+	
+	public static String getContent(String flexmarkContent) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("<html>\r\n" + 
+				"<head>\r\n" + 
+				"<meta charset=\"UTF-8\">\r\n" + 
+				"<link rel=\"stylesheet\" href=\"layout-fx.css\">\r\n" + 
+				"<link rel=\"stylesheet\" href=\"default-fx.css\">\r\n" + 
+				"<link rel=\"stylesheet\" href=\"prism-default.css\">\r\n" + 
+				"<title>Document Title</title>\r\n" + 
+				"<script src=\"prism.js\"></script>\r\n" + 
+				"</head>\r\n" + 
+				"<body>\r\n" + 
+				flexmarkContent + 
+				"</body>\r\n" + 
+				"</html>");
+		return sb.toString();
 	}
 
-//	protected void parseWithCommonmark() {
-//		Parser parser = Parser.builder().extensions(extensions).build();
-//		Node document = parser.parse(textArea.getText());
-//		HtmlRenderer renderer = HtmlRenderer.builder().extensions(extensions).build();
-//		String html = renderer.render(document);
-//		engine.loadContent(html);
-//	}
+	@FXML public void onWikiPage(KeyEvent event) {}
 
+	@FXML public void onWikiPageKeyReleased(KeyEvent event) {
+		if (event.getCode().equals(KeyCode.ESCAPE)) {
+			System.out.println("ESC");
+			root.toBack();
+		}
+	}
 }
