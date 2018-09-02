@@ -28,6 +28,7 @@ public class MainController extends BaseMainController<NavigationModel> {
 	@Autowired WikiPageUtil wikiPageUtil;
 	
 	@Autowired WikiPageController wikiPageController;
+	@Autowired WikioverviewController wikioverviewController;
 	
 	NavigationModelProvider provider = new NavigationModelProvider();
 
@@ -102,6 +103,7 @@ public class MainController extends BaseMainController<NavigationModel> {
 			wikiPageRepository.save(page);
 			wikiPageUtil.createFolder(page);
 			wikiPageToFront(page);
+			wikioverviewController.addWikiPage(page);
 		});
 		
 	}

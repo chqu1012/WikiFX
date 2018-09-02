@@ -28,7 +28,11 @@
 		 	 </cellValueFactory>
           </TableColumn>
             <TableColumn maxWidth="1.7976931348623157E308" prefWidth="289.0" text="Author" />
-            <TableColumn prefWidth="209.0" text="Zuletzt geupdatet" />
+            <TableColumn prefWidth="209.0" text="Zuletzt geupdatet">
+             <cellValueFactory>
+		        <PropertyValueFactory property="updated" />
+		 	 </cellValueFactory>
+            </TableColumn>
         </columns>
       </TableView>
    </children>

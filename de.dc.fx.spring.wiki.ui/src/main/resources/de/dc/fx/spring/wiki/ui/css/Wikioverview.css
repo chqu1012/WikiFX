@@ -54,9 +54,8 @@
     -fx-background-color: transparent;
 }
 
-
-
 .table-view > .virtual-flow > .scroll-bar > .increment-button, 
 .table-view > .virtual-flow > .scroll-bar > .decrement-button {
     -fx-opacity: 0;
 }
+

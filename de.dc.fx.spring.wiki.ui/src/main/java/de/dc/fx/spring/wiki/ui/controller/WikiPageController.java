@@ -58,6 +58,7 @@ public class WikiPageController extends BaseWikiPageController {
 		String content = wikiPageUtil.getWikiPageContent(wikiPage);
 		textArea.setText(content);
 		parseContent();
+		titleLabel.setText(wikiPage.getName());
 		root.requestFocus();
 	}
 	
@@ -83,8 +84,11 @@ public class WikiPageController extends BaseWikiPageController {
 
 	@FXML public void onWikiPageKeyReleased(KeyEvent event) {
 		if (event.getCode().equals(KeyCode.ESCAPE)) {
-			System.out.println("ESC");
 			root.toBack();
 		}
+	}
+
+	@FXML public void onBackButton(ActionEvent event) {
+		root.toBack();
 	}
 }

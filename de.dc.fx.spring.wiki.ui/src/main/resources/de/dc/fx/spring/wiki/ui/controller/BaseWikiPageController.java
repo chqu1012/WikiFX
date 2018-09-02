@@ -2,6 +2,7 @@ package de.dc.fx.spring.wiki.ui.controller;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
@@ -11,6 +12,7 @@ import javafx.scene.web.WebView;
 public abstract class BaseWikiPageController {
 
 	@FXML AnchorPane root;
+	@FXML Label titleLabel;
 	
 	@FXML 
 	protected TabPane tabPane;

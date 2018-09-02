@@ -30,4 +30,8 @@ public class WikioverviewController extends BaseWikioverviewController<WikiPage>
 			mainController.wikiPageToFront(page);
 		}
 	}
+	
+	public void addWikiPage(WikiPage page) {
+		masterData.add(page);
+	}
 }
