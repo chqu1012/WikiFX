@@ -2,6 +2,75 @@
   -fx-background-color: white;
 }
 
+.tab-pane {
+	-mwfx-tab-background: derive(-fx-background,25%);
+	-mwfx-tab-active: #55A5E4;
+
+    -fx-tab-max-width: 10em;
+}
+
+.tab-pane > .tab-header-area {
+	-fx-padding: 0 0.25em 0 0;
+}
+
+.tab-pane > .tab-header-area > .tab-header-background {
+	-fx-background-color: -fx-outer-border, transparent, -mwfx-tab-background;
+	-fx-background-insets: 1 1 0 1, 0 0 1 0, 1;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab {
+	-fx-background-color: -mwfx-tab-background;
+	-fx-background-insets: 0 1 1 0;
+	-fx-background-radius: 0;
+	-fx-padding: 0.5em 0.25em 0.5em 1em;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab:selected {
+	-fx-background-color: -mwfx-tab-active, -mwfx-tab-background;
+	-fx-background-insets: 0 1 0 0, 0 1 0.333333em 0;
+}
+.tab-pane > .tab-header-area > .headers-region > .tab:hover {
+	-fx-background-color: derive(-mwfx-tab-active,35%), -mwfx-tab-background;
+	-fx-background-insets: 0 1 0 0, 0 1 0.333333em 0;
+}
+
+.tab-pane .tab-label {
+	-fx-text-fill: derive(-fx-text-base-color,35%);
+}
+.tab-pane .tab:selected .tab-label,
+.tab-pane .tab:hover .tab-label {
+	-fx-text-fill: #55A5E4;
+}
+
+.tab-pane .focus-indicator {
+	visibility: hidden;
+}
+
+
+/* hide tab-close-button by default; show it only for selected tab and on hover */
+.tab-pane > .tab-header-area > .headers-region > .tab > .tab-container > .tab-close-button {
+	-fx-background-color: transparent;
+}
+.tab-pane > .tab-header-area > .headers-region > .tab:selected > .tab-container > .tab-close-button,
+.tab-pane > .tab-header-area > .headers-region > .tab:hover > .tab-container > .tab-close-button {
+	-fx-background-color: -fx-mark-color;
+	-fx-opacity: 0.4;
+}
+.tab-pane > .tab-header-area > .headers-region > .tab > .tab-container > .tab-close-button:hover {
+	-fx-background-color: #0078D7;
+	-fx-opacity: 1.0;
+}
+
+.split-pane > .split-pane-divider {
+    -fx-background-color: #a99;
+    -fx-padding: 0 1 0 0;
+}
+.split-pane:horizontal .split-pane-divider .horizontal-grabber,
+.split-pane:vertical .split-pane-divider .vertical-grabber {
+    -fx-padding: 0.25em;
+}
+
+
 /*******************************************************************************
  *                                                                             *
  * Push Button                                                                 *

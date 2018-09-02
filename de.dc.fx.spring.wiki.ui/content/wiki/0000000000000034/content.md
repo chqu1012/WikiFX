@@ -1,5 +1,5 @@
 Link: http://www.avajava.com/tutorials/lessons/how-do-i-write-a-string-to-a-file-using-commons-io.html
-
+```
 import java.io.File;
 import java.io.IOException;
 
@@ -13,3 +13,4 @@ public class WriteStringToFile {
 		FileUtils.writeStringToFile(file, string);
 	}
 }
+```
