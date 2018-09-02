@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import de.dc.fx.spring.wiki.ui.control.TreeViewer?>
+
+<BorderPane fx:controller="de.dc.fx.spring.wiki.ui.controller.MainController" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@css/Main.css" xmlns="http://javafx.com/javafx/8.0.162" xmlns:fx="http://javafx.com/fxml/1">
+   <left>
+      <TreeViewer fx:id="treeView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+      	         <contextMenu>
+            <ContextMenu>
+              <items>
+                  <MenuItem mnemonicParsing="false" text="Edit" />
+                  <MenuItem mnemonicParsing="false" text="Delete" />
+                  <Menu mnemonicParsing="false" text="New">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Ticket">
+                           <graphic>
+                              <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@img/icons8_Document_80px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#onNewCateory" text="Category">
+                           <graphic>
+                              <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@img/icons8_Open_96px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuItem>
+                    </items>
+                  </Menu>
+              </items>
+            </ContextMenu>
+         </contextMenu>
+      </TreeViewer>
+   </left>
+   <center>
+      <AnchorPane fx:id="contentPane" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+      	 <children>
+            <fx:include source="Wikioverview.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+            <fx:include source="WikiPage.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+         </children>
+      </AnchorPane>
+   </center>
+   <top>
+      <HBox prefHeight="46.0" prefWidth="1200.0" styleClass="header" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="titleLabel" maxHeight="1.7976931348623157E308" styleClass="header-label" text="Frater Anatis wikiFX">
+               <padding>
+                  <Insets left="15.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="searchText" prefWidth="378.0" promptText="Search....">
+               <HBox.margin>
+                  <Insets left="10.0" top="10.0" />
+               </HBox.margin>
+            </TextField>
+            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Label" HBox.hgrow="ALWAYS" />
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/icons8_User_96px.png" />
+               </image>
+               <HBox.margin>
+                  <Insets top="7.0" />
+               </HBox.margin>
+            </ImageView>
+            <Label fx:id="userLabel" maxHeight="1.7976931348623157E308" styleClass="header-user-label" text="Max Mustermann">
+               <HBox.margin>
+                  <Insets right="40.0" />
+               </HBox.margin>
+            </Label>
+            <ImageView fx:id="preferencesImage" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/icons8_Settings_50px.png" />
+               </image>
+               <HBox.margin>
+                  <Insets bottom="10.0" right="10.0" top="10.0" />
+               </HBox.margin>
+            </ImageView>
+         </children></HBox>
+   </top>
+</BorderPane>

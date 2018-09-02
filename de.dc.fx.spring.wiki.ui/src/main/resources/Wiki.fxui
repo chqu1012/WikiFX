@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fxui:FXTableView xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:fxui="http://www.example.org/fxui" name="WikiFX" packagePath="de.dc.fx.spring.wiki.ui">
+  <fxColumns name="Title" associatedFXProperty="//@fxEntity/@fxProperties.0"/>
+  <fxColumns name="Content" associatedFXProperty="//@fxEntity/@fxProperties.1"/>
+  <fxColumns name="CreatedOn" associatedFXProperty="//@fxEntity/@fxProperties.2"/>
+  <fxColumns name="UpdatedOn" associatedFXProperty="//@fxEntity/@fxProperties.3"/>
+  <fxEntity name="WEntry">
+    <fxProperties name="Title" type="String"/>
+    <fxProperties name="Content" type="String"/>
+    <fxProperties name="CreatedOn" type="LocalDateTime"/>
+    <fxProperties name="UpdatedOn" type="LocalDateTime"/>
+  </fxEntity>
+</fxui:FXTableView>

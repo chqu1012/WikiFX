@@ -1,0 +1,98 @@
+.tree-view, .tree-cell {
+    -fx-background-color: black ;
+    -fx-text-fill: white ;
+}
+.tree-cell:hover {
+    -fx-text-fill: #007897 ;
+}
+.tree-cell:selected {
+    -fx-font-weight: bold ;
+    -fx-background-color: #0078D7 ;
+}
+.tree-cell {
+    -fx-padding: 0.75em 0em 0.75em 0em ;
+}
+
+.tree-cell:sub-tree-item{
+     -fx-indent: 22;
+}
+
+.header{
+	-fx-background-color: black ;
+}
+
+.header-label{
+	-fx-text-fill: white ;
+	-fx-font-size: 24;
+	-fx-font-weight: bold;
+}
+
+.header-user-label{
+	-fx-text-fill: white;
+	-fx-font-size: 14;
+}
+
+.header-user-label:hover{
+	-fx-text-fill: #0078D7;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Text Field                                                                  *
+ *                                                                             *
+ ******************************************************************************/
+
+.text-input{
+    -fx-background-radius: 0, 0;
+    -fx-background-color: white;
+    -fx-border-color: gray;
+    -fx-background-insets: 0;
+
+    -fx-prompt-text-fill: #818181;
+
+    -fx-highlight-fill: #008287; /* TODO: this probably is the "active" color" */
+    -fx-highlight-text-fill: white;
+}
+
+.text-input:hover{
+    -fx-background-color: #e2e2e2;
+}
+
+.text-input:focused{
+    -fx-background-color: #5c5c5c, white;
+
+    -fx-text-fill: black;
+}
+
+.text-input > .right-button{
+    -fx-cursor: default;
+
+    -fx-background-insets: -0.1666665em -0.45em -0.1666665em -0.45em; /* 4 7 4 7 -> this values are subtracted by 2px in em because of the border of the textfield */
+}
+
+.text-field > .right-button > .right-button-graphic {
+    -fx-shape            : "M221.738,305.873l6.135,6.16l-2.875,2.863l-6.135-6.159l-6.263,6.237l-2.864-2.875l6.263-6.238l-6.177-6.202l2.875-2.863l6.177,6.201l6.244-6.22l2.864,2.876L221.738,305.873z";
+
+    -fx-padding: 0.5em 0.5em; /* TODO: put the real number here 18 18 */
+    -fx-background-color: black;
+}
+
+.text-input > .right-button:hover {
+    -fx-background-color: #dedede;
+}
+
+.text-input > .right-button:pressed {
+    -fx-background-color: black;
+}
+
+.text-input > .right-button:pressed > .right-button-graphic {
+    -fx-background-color: white;
+}
+
+.text-input:disabled
+{
+    -fx-opacity: 1;
+    -fx-background-insets: 0, 2;
+    -fx-background-color: #e7e6e6;
+    -fx-text-fill: #999999;
+}

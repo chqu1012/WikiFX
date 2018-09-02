@@ -1,0 +1,53 @@
+buildscript {
+	ext {
+		springBootVersion = '2.0.0.M3'
+	}
+	repositories {
+		mavenCentral()
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+	maven { url "https://repo.spring.io/snapshot" }
+	maven { url "https://repo.spring.io/milestone" }
+}
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.boot:spring-boot-starter-validation')
+	compile group: 'com.jfoenix', name: 'jfoenix', version: '8.0.2'
+	compile group: 'org.jxls', name: 'jxls', version: '2.4.1'
+	compile group: 'org.jxls', name: 'jxls-poi', version: '1.0.13'
+	compile group: 'org.jxls', name: 'jxls-jexcel', version: '1.0.6'
+	compile group: 'javax.mail', name: 'javax.mail-api', version: '1.6.0'
+	compile group: 'com.sun.mail', name: 'javax.mail', version: '1.6.0'
+	compile group: 'org.fxmisc.richtext', name: 'richtextfx', version: '0.7-M5'
+	compile group: 'org.controlsfx', name: 'controlsfx', version: '8.40.15'
+	compile group: 'com.github.rjeschke', name: 'txtmark', version: '0.13'
+	runtime('com.h2database:h2')
+
+	compile group: 'org.jfxtras', name: 'jfxtras-labs', version: '8.0-r5'
+	compile group: 'org.jsoup', name: 'jsoup', version: '1.10.3'
+	compile group: 'com.atlassian.commonmark', name: 'commonmark-ext-yaml-front-matter', version: '0.11.0'
+	compile group: 'com.atlassian.commonmark', name: 'commonmark', version: '0.11.0'
+	compile 'com.atlassian.commonmark:commonmark-ext-gfm-tables:0.11.0'
+	compile group: 'com.vladsch.flexmark', name: 'flexmark-all', version: '0.34.22'
+	compile 'com.vladsch.flexmark:flexmark-ext-tables:0.34.10'
+  	compile 'com.vladsch.flexmark:flexmark-ext-attributes:0.34.10'
+    compile group: 'commons-io', name: 'commons-io', version: '2.6'
+    compile group: 'de.jensd', name: 'fontawesomefx', version: '8.9'
+}
