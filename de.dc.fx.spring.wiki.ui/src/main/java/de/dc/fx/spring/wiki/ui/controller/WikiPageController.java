@@ -29,6 +29,9 @@ import com.vladsch.flexmark.ext.xwiki.macros.MacroExtension;
 import com.vladsch.flexmark.ext.yaml.front.matter.YamlFrontMatterExtension;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
+import com.vladsch.flexmark.profiles.pegdown.Extensions;
+import com.vladsch.flexmark.profiles.pegdown.PegdownOptionsAdapter;
+import com.vladsch.flexmark.util.options.DataHolder;
 
 import de.dc.fx.spring.wiki.ui.model.NavigationModel;
 import de.dc.fx.spring.wiki.ui.model.WikiPage;
@@ -51,48 +54,49 @@ public class WikiPageController extends BaseWikiPageController {
 	private WikiPage currentPage;
 
 	private Parser parser;
-
 	private HtmlRenderer renderer;
+	
+	static DataHolder OPTIONS = PegdownOptionsAdapter.flexmarkOptions(Extensions.ALL);
 
 	@Override
 	public void initialize() {
 		super.initialize();
-		LinkedList<Extension> extensions = new LinkedList<Extension>();
-	    extensions.add(AbbreviationExtension.create());
-	    extensions.add(AdmonitionExtension.create());
-	    extensions.add(AnchorLinkExtension.create());
-	    extensions.add(AsideExtension.create());
-	    extensions.add(AttributesExtension.create());
-	    extensions.add(AutolinkExtension.create());
-	    extensions.add(DefinitionExtension.create());
-	    extensions.add(EmojiExtension.create());
-	    extensions.add(EnumeratedReferenceExtension.create());
-	    extensions.add(EscapedCharacterExtension.create());
-	    extensions.add(FootnoteExtension.create());
-//	    extensions.add(GfmIssuesExtension.create());
-	    extensions.add(GfmUsersExtension.create());
-//	    extensions.add(InsExtension.create());
-//	    extensions.add(JekyllFrontMatterExtension.create());
-//	    extensions.add(JekyllTagExtension.create());
-//	    extensions.add(JiraConverterExtension.create());
-	    extensions.add(MacroExtension.create());
-//	    extensions.add(MediaTagsExtension.create());
-//	    extensions.add(SimTocExtension.create());
-	    extensions.add(StrikethroughExtension.create());
-//	    extensions.add(StrikethroughSubscriptExtension.create());
-//	    extensions.add(SubscriptExtension.create());
-//	    extensions.add(SuperscriptExtension.create());
-	    extensions.add(TablesExtension.create());
-	    extensions.add(TaskListExtension.create());
-	    extensions.add(TocExtension.create());
-//	    extensions.add(TypographicExtension.create());
-	    extensions.add(WikiLinkExtension.create());
-	    extensions.add(YamlFrontMatterExtension.create());
-//	    extensions.add(YouTrackConverterExtension.create());
-//	    extensions.add(YouTubeLinkExtension.create());
+//		LinkedList<Extension> extensions = new LinkedList<Extension>();
+//	    extensions.add(AbbreviationExtension.create());
+//	    extensions.add(AdmonitionExtension.create());
+//	    extensions.add(AnchorLinkExtension.create());
+//	    extensions.add(AsideExtension.create());
+//	    extensions.add(AttributesExtension.create());
+//	    extensions.add(AutolinkExtension.create());
+//	    extensions.add(DefinitionExtension.create());
+//	    extensions.add(EmojiExtension.create());
+//	    extensions.add(EnumeratedReferenceExtension.create());
+//	    extensions.add(EscapedCharacterExtension.create());
+//	    extensions.add(FootnoteExtension.create());
+////	    extensions.add(GfmIssuesExtension.create());
+//	    extensions.add(GfmUsersExtension.create());
+////	    extensions.add(InsExtension.create());
+////	    extensions.add(JekyllFrontMatterExtension.create());
+////	    extensions.add(JekyllTagExtension.create());
+////	    extensions.add(JiraConverterExtension.create());
+//	    extensions.add(MacroExtension.create());
+////	    extensions.add(MediaTagsExtension.create());
+////	    extensions.add(SimTocExtension.create());
+//	    extensions.add(StrikethroughExtension.create());
+////	    extensions.add(StrikethroughSubscriptExtension.create());
+////	    extensions.add(SubscriptExtension.create());
+////	    extensions.add(SuperscriptExtension.create());
+//	    extensions.add(TablesExtension.create());
+//	    extensions.add(TaskListExtension.create());
+//	    extensions.add(TocExtension.create());
+////	    extensions.add(TypographicExtension.create());
+//	    extensions.add(WikiLinkExtension.create());
+//	    extensions.add(YamlFrontMatterExtension.create());
+////	    extensions.add(YouTrackConverterExtension.create());
+////	    extensions.add(YouTubeLinkExtension.create());
 	    
-		parser = Parser.builder().extensions(extensions).build();
-		renderer = HtmlRenderer.builder().extensions(extensions).build();
+		parser = Parser.builder(OPTIONS).build();
+		renderer = HtmlRenderer.builder(OPTIONS).build();
 		textArea.textProperty().addListener(o ->parseContent());
 	}
 	
