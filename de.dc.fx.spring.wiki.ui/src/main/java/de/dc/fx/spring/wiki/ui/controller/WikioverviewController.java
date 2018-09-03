@@ -1,8 +1,11 @@
 package de.dc.fx.spring.wiki.ui.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import de.dc.fx.spring.wiki.ui.model.NavigationModel;
 import de.dc.fx.spring.wiki.ui.model.WikiPage;
 import de.dc.fx.spring.wiki.ui.repository.WikiPageRepository;
 import javafx.collections.FXCollections;
@@ -33,5 +36,11 @@ public class WikioverviewController extends BaseWikioverviewController<WikiPage>
 	
 	public void addWikiPage(WikiPage page) {
 		masterData.add(page);
+	}
+	
+	public void filterByNavigation(NavigationModel navigationModel) {
+		masterData.clear();
+		List<WikiPage> pages = wikiPageRepository.findAllByNavigationId(navigationModel.getId());
+		masterData.addAll(pages);
 	}
 }

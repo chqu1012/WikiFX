@@ -1,6 +1,7 @@
 package de.dc.fx.spring.wiki.ui.controller;
 
 import java.util.LinkedList;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,32 +19,21 @@ import com.vladsch.flexmark.ext.emoji.EmojiExtension;
 import com.vladsch.flexmark.ext.enumerated.reference.EnumeratedReferenceExtension;
 import com.vladsch.flexmark.ext.escaped.character.EscapedCharacterExtension;
 import com.vladsch.flexmark.ext.footnotes.FootnoteExtension;
-import com.vladsch.flexmark.ext.gfm.issues.GfmIssuesExtension;
 import com.vladsch.flexmark.ext.gfm.strikethrough.StrikethroughExtension;
-import com.vladsch.flexmark.ext.gfm.strikethrough.StrikethroughSubscriptExtension;
-import com.vladsch.flexmark.ext.gfm.strikethrough.SubscriptExtension;
 import com.vladsch.flexmark.ext.gfm.tasklist.TaskListExtension;
 import com.vladsch.flexmark.ext.gfm.users.GfmUsersExtension;
-import com.vladsch.flexmark.ext.ins.InsExtension;
-import com.vladsch.flexmark.ext.jekyll.front.matter.JekyllFrontMatterExtension;
-import com.vladsch.flexmark.ext.jekyll.tag.JekyllTagExtension;
-import com.vladsch.flexmark.ext.media.tags.MediaTagsExtension;
 import com.vladsch.flexmark.ext.tables.TablesExtension;
-import com.vladsch.flexmark.ext.toc.SimTocExtension;
 import com.vladsch.flexmark.ext.toc.TocExtension;
-import com.vladsch.flexmark.ext.typographic.TypographicExtension;
 import com.vladsch.flexmark.ext.wikilink.WikiLinkExtension;
 import com.vladsch.flexmark.ext.xwiki.macros.MacroExtension;
 import com.vladsch.flexmark.ext.yaml.front.matter.YamlFrontMatterExtension;
-import com.vladsch.flexmark.ext.youtube.embedded.YouTubeLinkExtension;
 import com.vladsch.flexmark.html.HtmlRenderer;
-import com.vladsch.flexmark.jira.converter.JiraConverterExtension;
 import com.vladsch.flexmark.parser.Parser;
-import com.vladsch.flexmark.superscript.SuperscriptExtension;
-import com.vladsch.flexmark.youtrack.converter.YouTrackConverterExtension;
 
+import de.dc.fx.spring.wiki.ui.model.NavigationModel;
 import de.dc.fx.spring.wiki.ui.model.WikiPage;
 import de.dc.fx.spring.wiki.ui.preview.MarkDownPreview;
+import de.dc.fx.spring.wiki.ui.repository.NavigationModelRepository;
 import de.dc.fx.spring.wiki.ui.util.WikiPageUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -55,6 +45,8 @@ public class WikiPageController extends BaseWikiPageController {
 
 	@Autowired WikiPageUtil wikiPageUtil;
 	@Autowired MarkDownPreview preview;
+	
+	@Autowired NavigationModelRepository navigationModelRepository;
 	
 	private WikiPage currentPage;
 
@@ -128,6 +120,8 @@ public class WikiPageController extends BaseWikiPageController {
 		String content = wikiPageUtil.getWikiPageContent(wikiPage);
 		textArea.setText(content);
 		parseContent();
+		Optional<NavigationModel> navigation = navigationModelRepository.findById(wikiPage.getId());
+		navigation.ifPresent(nav->categoryLabel.setText(nav.getName()));
 		titleLabel.setText(wikiPage.getName());
 		root.requestFocus();
 	}

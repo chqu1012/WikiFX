@@ -14,6 +14,7 @@ public abstract class BaseWikiPageController {
 
 	@FXML AnchorPane root;
 	@FXML Label titleLabel;
+	@FXML Label categoryLabel;
 	@FXML SplitPane editorSplitPane;
 	
 	@FXML 

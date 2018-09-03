@@ -18,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TreeItem;
 import javafx.fxml.FXML;
+import javafx.scene.input.MouseEvent;
 
 @Controller
 public class MainController extends BaseMainController<NavigationModel> {
@@ -38,7 +39,7 @@ public class MainController extends BaseMainController<NavigationModel> {
 		treeView.setContentProvider(new TreeViewContentProvider());
 		treeView.setLabelProvider(new TreeViewerLabelProvider());
 
-		loadModel();
+		loadModel(provider.buildTree(navigationModelRepository.findAll()));
 	}
 
 	private void initNavigation() {
@@ -65,11 +66,10 @@ public class MainController extends BaseMainController<NavigationModel> {
 			
 		});
 
-		loadModel();
+		loadModel(provider.buildTree(navigationModelRepository.findAll()));
 	}
 
-	private void loadModel() {
-		NavigationModel input = provider.buildTree(navigationModelRepository.findAll());
+	private void loadModel(NavigationModel input) {
 		treeView.setInput(input);
 		treeView.getRoot().setExpanded(true);
 		treeView.getRoot().getChildren().forEach(this::expandNodeAndChilren);
@@ -105,5 +105,11 @@ public class MainController extends BaseMainController<NavigationModel> {
 	public void wikiPageToFront(WikiPage page) {
 		wikiPage.toFront();
 		wikiPageController.setWikiPage(page);
+	}
+
+	@FXML public void onTreeViewerMouseClicked(MouseEvent event) {
+		NavigationModel selection = treeView.getSelectionModel().getSelectedItem().getValue();
+		wikioverviewController.filterByNavigation(selection);
+		wikiOverview.toFront();
 	}
 }
