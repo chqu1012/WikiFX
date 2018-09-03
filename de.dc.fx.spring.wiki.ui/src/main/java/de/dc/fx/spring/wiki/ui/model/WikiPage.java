@@ -18,6 +18,9 @@ public class WikiPage {
 	
 	@Column(nullable = false)
 	private String name;
+
+	@Column(nullable = false)
+	private Long navigationId;
 	
 	@Column(nullable = false)
 	private LocalDateTime created;
@@ -28,9 +31,18 @@ public class WikiPage {
 	public WikiPage() {
 	}
 
-	public WikiPage(String name, LocalDateTime created) {
+	public WikiPage(String name, Long navigationId, LocalDateTime created) {
 		this.name = name;
+		this.navigationId = navigationId;
 		this.created = created;
+	}
+
+	public Long getNavigationId() {
+		return navigationId;
+	}
+
+	public void setNavigationId(Long navigationId) {
+		this.navigationId = navigationId;
 	}
 
 	public Long getId() {

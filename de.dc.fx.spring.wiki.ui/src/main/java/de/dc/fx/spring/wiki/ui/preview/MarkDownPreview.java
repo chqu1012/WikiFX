@@ -9,7 +9,6 @@ public class MarkDownPreview {
 
 	public String getContent(String flexmarkContent) {
 		StringBuffer sb = new StringBuffer();
-		System.out.println( getClass().getResource("markdownpad-github.css"));
 		sb.append("<!DOCTYPE html>\n"
 				+ "<html>\n"
 				+ "<head>\n"

@@ -45,36 +45,25 @@ public class MainController extends BaseMainController<NavigationModel> {
 		if (navigationModelRepository.findAll().size() == 0) {
 			NavigationModel model = new NavigationModel("NAVIGATION", null);
 			model = navigationModelRepository.save(model);
-
-			NavigationModel dashboard = new NavigationModel("DASHBOARD", model.getId());
-			NavigationModel meinBereich = new NavigationModel("MEIN BEREICH", model.getId());
-			dashboard = navigationModelRepository.save(dashboard);
-			meinBereich = navigationModelRepository.save(meinBereich);
-
-			NavigationModel startseite = new NavigationModel("Startseite", dashboard.getId());
-			NavigationModel unternehmensdaten = new NavigationModel("Unternehmensdaten", dashboard.getId());
-			NavigationModel benutzer = new NavigationModel("Benutzer", dashboard.getId());
-			NavigationModel vertragsuebersich = new NavigationModel("Vertragsübersicht", dashboard.getId());
-			NavigationModel rechnungen = new NavigationModel("Rechnungen", dashboard.getId());
-			NavigationModel bestellhistorie = new NavigationModel("Bestellhistorie", dashboard.getId());
-			NavigationModel statistiken = new NavigationModel("Statistiken", dashboard.getId());
-			NavigationModel lizenzen = new NavigationModel("Lizenzen bestellen", dashboard.getId());
-			navigationModelRepository.save(startseite);
-			navigationModelRepository.save(unternehmensdaten);
-			navigationModelRepository.save(benutzer);
-			navigationModelRepository.save(vertragsuebersich);
-			navigationModelRepository.save(rechnungen);
-			navigationModelRepository.save(bestellhistorie);
-			navigationModelRepository.save(statistiken);
-			navigationModelRepository.save(lizenzen);
 		}
 	}
 
 	public void onNewCateory(ActionEvent event) {
 		NavigationModel selection = treeView.getSelectionModel().getSelectedItem().getValue();
-		Long selectedId = selection.getId() == null ? -1L : selection.getId();
-		NavigationModel model = new NavigationModel("Hello World", selectedId);
-		navigationModelRepository.save(model);
+		Long selectedId = selection.getId();
+		
+		TextInputDialog dialog = new TextInputDialog("Neue Seite*");
+		dialog.setTitle("Text Input Dialog");
+		dialog.setHeaderText("Text Input Dialog");
+		dialog.setContentText("Bitte geben sie einen Namen für die neue Seite ein:");
+		Optional<String> result = dialog.showAndWait();
+		result.ifPresent(name ->{
+			if (selectedId!=null && name!=null) {
+				NavigationModel model = new NavigationModel(name, selectedId);
+				navigationModelRepository.save(model);
+			}
+			
+		});
 
 		loadModel();
 	}
@@ -92,6 +81,9 @@ public class MainController extends BaseMainController<NavigationModel> {
 	}
 
 	@FXML public void onNewPageButton(ActionEvent event) {
+		TreeItem<NavigationModel> selectedItem = treeView.getSelectionModel().getSelectedItem();
+		Long navigationId = selectedItem.getValue().getId();
+		
 		TextInputDialog dialog = new TextInputDialog("Neue Seite*");
 		dialog.setTitle("Text Input Dialog");
 		dialog.setHeaderText("Text Input Dialog");
@@ -99,11 +91,13 @@ public class MainController extends BaseMainController<NavigationModel> {
 
 		Optional<String> result = dialog.showAndWait();
 		result.ifPresent(name ->{
-			WikiPage page = new WikiPage(name, LocalDateTime.now());
-			wikiPageRepository.save(page);
-			wikiPageUtil.createFolder(page);
-			wikiPageToFront(page);
-			wikioverviewController.addWikiPage(page);
+			if (navigationId!=null && name!=null) {
+				WikiPage page = new WikiPage(name, navigationId, LocalDateTime.now());
+				wikiPageRepository.save(page);
+				wikiPageUtil.createFolder(page);
+				wikiPageToFront(page);
+				wikioverviewController.addWikiPage(page);
+			}
 		});
 		
 	}
