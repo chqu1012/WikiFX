@@ -61,40 +61,7 @@ public class WikiPageController extends BaseWikiPageController {
 	@Override
 	public void initialize() {
 		super.initialize();
-//		LinkedList<Extension> extensions = new LinkedList<Extension>();
-//	    extensions.add(AbbreviationExtension.create());
-//	    extensions.add(AdmonitionExtension.create());
-//	    extensions.add(AnchorLinkExtension.create());
-//	    extensions.add(AsideExtension.create());
-//	    extensions.add(AttributesExtension.create());
-//	    extensions.add(AutolinkExtension.create());
-//	    extensions.add(DefinitionExtension.create());
-//	    extensions.add(EmojiExtension.create());
-//	    extensions.add(EnumeratedReferenceExtension.create());
-//	    extensions.add(EscapedCharacterExtension.create());
-//	    extensions.add(FootnoteExtension.create());
-////	    extensions.add(GfmIssuesExtension.create());
-//	    extensions.add(GfmUsersExtension.create());
-////	    extensions.add(InsExtension.create());
-////	    extensions.add(JekyllFrontMatterExtension.create());
-////	    extensions.add(JekyllTagExtension.create());
-////	    extensions.add(JiraConverterExtension.create());
-//	    extensions.add(MacroExtension.create());
-////	    extensions.add(MediaTagsExtension.create());
-////	    extensions.add(SimTocExtension.create());
-//	    extensions.add(StrikethroughExtension.create());
-////	    extensions.add(StrikethroughSubscriptExtension.create());
-////	    extensions.add(SubscriptExtension.create());
-////	    extensions.add(SuperscriptExtension.create());
-//	    extensions.add(TablesExtension.create());
-//	    extensions.add(TaskListExtension.create());
-//	    extensions.add(TocExtension.create());
-////	    extensions.add(TypographicExtension.create());
-//	    extensions.add(WikiLinkExtension.create());
-//	    extensions.add(YamlFrontMatterExtension.create());
-////	    extensions.add(YouTrackConverterExtension.create());
-////	    extensions.add(YouTubeLinkExtension.create());
-	    
+		
 		parser = Parser.builder(OPTIONS).build();
 		renderer = HtmlRenderer.builder(OPTIONS).build();
 		textArea.textProperty().addListener(o ->parseContent());
@@ -115,6 +82,7 @@ public class WikiPageController extends BaseWikiPageController {
         Node document = parser.parse(textArea.getText());
         String html = renderer.render(document);
         String content = preview.getContent(html);
+        System.out.println(content);
 		previewEngine.loadContent(content, "text/html");
         engine.loadContent(content, "text/html");
 	}

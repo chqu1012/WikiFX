@@ -109,7 +109,11 @@ public class MainController extends BaseMainController<NavigationModel> {
 
 	@FXML public void onTreeViewerMouseClicked(MouseEvent event) {
 		NavigationModel selection = treeView.getSelectionModel().getSelectedItem().getValue();
-		wikioverviewController.filterByNavigation(selection);
+		if (selection.getName().equals("NAVIGATION")) {
+			wikioverviewController.settAllWikiPages();
+		}else {
+			wikioverviewController.filterByNavigation(selection);
+		}
 		wikiOverview.toFront();
 	}
 }

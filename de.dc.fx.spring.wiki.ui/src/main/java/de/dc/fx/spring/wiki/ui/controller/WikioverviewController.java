@@ -38,6 +38,12 @@ public class WikioverviewController extends BaseWikioverviewController<WikiPage>
 		masterData.add(page);
 	}
 	
+	public void settAllWikiPages() {
+		masterData.clear();
+		List<WikiPage> pages = wikiPageRepository.findAll();
+		masterData.addAll(pages);
+	}
+	
 	public void filterByNavigation(NavigationModel navigationModel) {
 		masterData.clear();
 		List<WikiPage> pages = wikiPageRepository.findAllByNavigationId(navigationModel.getId());

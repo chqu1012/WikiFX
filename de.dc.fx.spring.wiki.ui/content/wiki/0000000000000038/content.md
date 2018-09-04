@@ -1,3 +1,5 @@
+![image](icons8_User_96px.png)    
+  
 *Italic* _Italic_
 
 **Bold** __Bold__
@@ -34,5 +36,5 @@ asdasd
 ```
 # code block
 print '3 backticks or'
-print 'indent 4 spaces'
+print 'indent 4 spaces' 
 ```
