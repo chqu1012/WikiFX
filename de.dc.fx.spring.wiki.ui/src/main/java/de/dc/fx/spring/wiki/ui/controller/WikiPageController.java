@@ -1,34 +1,15 @@
 package de.dc.fx.spring.wiki.ui.controller;
 
-import java.util.LinkedList;
+import java.io.File;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import com.vladsch.flexmark.Extension;
 import com.vladsch.flexmark.ast.Node;
-import com.vladsch.flexmark.ext.abbreviation.AbbreviationExtension;
-import com.vladsch.flexmark.ext.admonition.AdmonitionExtension;
-import com.vladsch.flexmark.ext.anchorlink.AnchorLinkExtension;
-import com.vladsch.flexmark.ext.aside.AsideExtension;
-import com.vladsch.flexmark.ext.attributes.AttributesExtension;
-import com.vladsch.flexmark.ext.autolink.AutolinkExtension;
-import com.vladsch.flexmark.ext.definition.DefinitionExtension;
-import com.vladsch.flexmark.ext.emoji.EmojiExtension;
-import com.vladsch.flexmark.ext.enumerated.reference.EnumeratedReferenceExtension;
-import com.vladsch.flexmark.ext.escaped.character.EscapedCharacterExtension;
-import com.vladsch.flexmark.ext.footnotes.FootnoteExtension;
-import com.vladsch.flexmark.ext.gfm.strikethrough.StrikethroughExtension;
-import com.vladsch.flexmark.ext.gfm.tasklist.TaskListExtension;
-import com.vladsch.flexmark.ext.gfm.users.GfmUsersExtension;
-import com.vladsch.flexmark.ext.tables.TablesExtension;
-import com.vladsch.flexmark.ext.toc.TocExtension;
-import com.vladsch.flexmark.ext.wikilink.WikiLinkExtension;
-import com.vladsch.flexmark.ext.xwiki.macros.MacroExtension;
-import com.vladsch.flexmark.ext.yaml.front.matter.YamlFrontMatterExtension;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
+import com.vladsch.flexmark.pdf.converter.PdfConverterExtension;
 import com.vladsch.flexmark.profiles.pegdown.Extensions;
 import com.vladsch.flexmark.profiles.pegdown.PegdownOptionsAdapter;
 import com.vladsch.flexmark.util.options.DataHolder;
@@ -40,8 +21,11 @@ import de.dc.fx.spring.wiki.ui.repository.NavigationModelRepository;
 import de.dc.fx.spring.wiki.ui.util.WikiPageUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 @Controller
 public class WikiPageController extends BaseWikiPageController {
@@ -81,7 +65,7 @@ public class WikiPageController extends BaseWikiPageController {
         String html = renderer.render(document);
         String content = preview.getContent(html);
 		previewEngine.loadContent(content, "text/html");
-		String htmlPath = wikiPageUtil.writeIndexHtml(currentPage, html);
+		String htmlPath = wikiPageUtil.writeIndexHtml(currentPage, content.replaceAll("<code class=\"language-java\">", "<code class=\"java\">"));
     	engine.load("file:///"+htmlPath);
 	}
 	
@@ -106,5 +90,17 @@ public class WikiPageController extends BaseWikiPageController {
 
 	@FXML public void onBackButton(ActionEvent event) {
 		root.toBack();
+	}
+
+	@FXML public void onExportPdfButton(ActionEvent event) {
+		 FileChooser fileChooser = new FileChooser();
+		 fileChooser.setInitialFileName("Export.pdf");
+         fileChooser.setTitle("Save to pdf");
+         File file = fileChooser.showSaveDialog(new Stage());
+         if (currentPage!=null && file != null) {
+			Node document = parser.parse(textArea.getText());
+			String html = renderer.render(document);
+			PdfConverterExtension.exportToPdf(file.getAbsolutePath(), preview.getContent(html),"", OPTIONS);
+         }
 	}
 }

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="file:/C:/Users/Dim/git/WikiFX/de.dc.fx.spring.wiki.ui/bin/de/dc/fx/spring/wiki/ui/preview/markdownpad-github.css">
+<style>
+.mwfx-editor-selection {
+  border-right: 5px solid #f47806;
+  margin-right: -5px;
+  background-color: rgb(253, 247, 241);
+}
+</style>
+<script src="file:/C:/Users/Dim/git/WikiFX/de.dc.fx.spring.wiki.ui/bin/de/dc/fx/spring/wiki/ui/preview/preview.js"></script>
+<link rel="stylesheet" href="file:/C:/Users/Dim/git/WikiFX/de.dc.fx.spring.wiki.ui/bin/de/dc/fx/spring/wiki/ui/preview/prism/prism.css">
+<script src="file:/C:/Users/Dim/git/WikiFX/de.dc.fx.spring.wiki.ui/bin/de/dc/fx/spring/wiki/ui/preview/prism/prism-core.min.js"></script>
+<script src="file:/C:/Users/Dim/git/WikiFX/de.dc.fx.spring.wiki.ui/bin/de/dc/fx/spring/wiki/ui/preview/prism/components/prism-java.min.js"></script>
+</head>
+<body>
+<pre><code class="language-Java">	private String prismSyntaxHighlighting() {
+		// build HTML (only load used languages)
+		// Note: not using Prism Autoloader plugin because it lazy loads/highlights, which causes flicker
+		//       during fast typing; it also does not work with &quot;alias&quot; languages (e.g. js, html, xml, svg, ...)
+		StringBuilder buf = new StringBuilder();
+		buf.append(&quot;&lt;link rel=\&quot;stylesheet\&quot; href=\&quot;&quot;).append(getClass().getResource(&quot;prism/prism.css&quot;)).append(&quot;\&quot;&gt;\n&quot;);
+		buf.append(&quot;&lt;script src=\&quot;&quot;).append(getClass().getResource(&quot;prism/prism-core.min.js&quot;)).append(&quot;\&quot;&gt;&lt;/script&gt;\n&quot;);
+		buf.append(&quot;&lt;script src=\&quot;&quot;).append(getClass().getResource(&quot;highlight/highlight.js&quot;)).append(&quot;\&quot;&gt;&lt;/script&gt;\n&quot;);
+		buf.append(&quot;&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;\n&quot;);
+		URL url = getClass().getResource(&quot;prism/components/prism-java.min.js&quot;);
+		buf.append(&quot;&lt;script src=\&quot;&quot;).append(url).append(&quot;\&quot;&gt;&lt;/script&gt;\n&quot;);
+		return buf.toString();
+	}
+</code></pre>
+</body>
+</html>

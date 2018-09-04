@@ -15,9 +15,9 @@ import de.dc.fx.spring.wiki.ui.repository.NavigationModelRepository;
 import de.dc.fx.spring.wiki.ui.repository.WikiPageRepository;
 import de.dc.fx.spring.wiki.ui.util.WikiPageUtil;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TreeItem;
-import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 
 @Controller

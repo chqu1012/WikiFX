@@ -34,8 +34,12 @@ asdasd
 
 `Inline code` with backticks
 
-```
+```java
 # code block
 print '3 backticks or'
 print 'indent 4 spaces' 
+
+public static void main(){
+	String name = "Hello World";
+}
 ```
