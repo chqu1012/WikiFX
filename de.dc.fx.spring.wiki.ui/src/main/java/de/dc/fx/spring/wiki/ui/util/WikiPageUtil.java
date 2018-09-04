@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-import org.apache.commons.io.Charsets;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +15,16 @@ public class WikiPageUtil extends BaseFolderUtil<WikiPage>{
 	@Override
 	protected String resFolderName() {
 		return "wiki";
+	}
+	
+	public String writeIndexHtml(WikiPage t, String content) {
+		String file = getFolderBy(t).getAbsolutePath()+"/index.html";
+		try {
+			FileUtils.writeStringToFile(new File(file), content, Charset.forName("UTF-8"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return file;
 	}
 	
 	public void writeWikiPageContent(WikiPage t, String content) {

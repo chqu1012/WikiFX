@@ -1,4 +1,5 @@
-![image](icons8_User_96px.png)    
+![image](img/icons8_User_96px.png)    
+![image](img/icons8_User_96px.png)  
   
 *Italic* _Italic_
 

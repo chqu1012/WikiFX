@@ -69,8 +69,6 @@ public class WikiPageController extends BaseWikiPageController {
 	
 	@Override
 	protected void onSaveWikiPageButton(ActionEvent event) {
-        parseContent(); 
-        
         if (currentPage!=null) {
         	wikiPageUtil.writeWikiPageContent(currentPage, textArea.getText());
 		}
@@ -82,9 +80,9 @@ public class WikiPageController extends BaseWikiPageController {
         Node document = parser.parse(textArea.getText());
         String html = renderer.render(document);
         String content = preview.getContent(html);
-        System.out.println(content);
 		previewEngine.loadContent(content, "text/html");
-        engine.loadContent(content, "text/html");
+		String htmlPath = wikiPageUtil.writeIndexHtml(currentPage, html);
+    	engine.load("file:///"+htmlPath);
 	}
 	
 	public void setWikiPage(WikiPage wikiPage) {
@@ -97,24 +95,6 @@ public class WikiPageController extends BaseWikiPageController {
 		titleLabel.setText(wikiPage.getName());
 		root.requestFocus();
 	}
-	
-//	public static String getContent(String flexmarkContent) {
-//		StringBuffer sb = new StringBuffer();
-//		sb.append("<html>\r\n" + 
-//				"<head>\r\n" + 
-//				"<meta charset=\"UTF-8\">\r\n" + 
-//				"<link rel=\"stylesheet\" href=\"layout-fx.css\">\r\n" + 
-//				"<link rel=\"stylesheet\" href=\"default-fx.css\">\r\n" + 
-//				"<link rel=\"stylesheet\" href=\"prism-default.css\">\r\n" + 
-//				"<title>Document Title</title>\r\n" + 
-//				"<script src=\"prism.js\"></script>\r\n" + 
-//				"</head>\r\n" + 
-//				"<body>\r\n" + 
-//				flexmarkContent + 
-//				"</body>\r\n" + 
-//				"</html>");
-//		return sb.toString();
-//	}
 
 	@FXML public void onWikiPage(KeyEvent event) {}
 
