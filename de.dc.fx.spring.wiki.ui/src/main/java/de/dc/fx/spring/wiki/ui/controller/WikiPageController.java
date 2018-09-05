@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 
 import com.vladsch.flexmark.ast.Node;
 import com.vladsch.flexmark.ext.admonition.AdmonitionExtension;
+import com.vladsch.flexmark.ext.aside.AsideExtension;
+import com.vladsch.flexmark.ext.definition.DefinitionExtension;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
 import com.vladsch.flexmark.pdf.converter.PdfConverterExtension;
@@ -41,11 +43,16 @@ public class WikiPageController extends BaseWikiPageController {
 	private Parser parser;
 	private HtmlRenderer renderer;
 	
-	static DataHolder OPTIONS = PegdownOptionsAdapter.flexmarkOptions(Extensions.ALL, AdmonitionExtension.create());
+	static DataHolder OPTIONS = PegdownOptionsAdapter.flexmarkOptions(Extensions.ALL, AdmonitionExtension.create(), AsideExtension.create());
 
 	@Override
 	public void initialize() {
 		super.initialize();
+		OPTIONS.toMutable().set(DefinitionExtension.COLON_MARKER, true)
+		.set(DefinitionExtension.TILDE_MARKER, true)
+		.set(AsideExtension.IGNORE_BLANK_LINE, true)
+		.set(AsideExtension.EXTEND_TO_BLANK_LINE, true);
+		
 		parser = Parser.builder(OPTIONS).build();
 		renderer = HtmlRenderer.builder(OPTIONS).build();
 		textArea.textProperty().addListener(o ->parseContent());
@@ -65,7 +72,7 @@ public class WikiPageController extends BaseWikiPageController {
         String html = renderer.render(document);
         String content = preview.getContent(html);
 		previewEngine.loadContent(content, "text/html");
-		String htmlPath = wikiPageUtil.writeIndexHtml(currentPage, content.replaceAll("<code class=\"language-java\">", "<code class=\"java\">"));
+		String htmlPath = wikiPageUtil.writeIndexHtml(currentPage, content);
     	engine.load("file:///"+htmlPath);
 	}
 	
