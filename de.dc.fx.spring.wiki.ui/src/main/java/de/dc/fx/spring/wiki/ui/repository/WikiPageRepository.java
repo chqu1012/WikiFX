@@ -11,5 +11,7 @@ import de.dc.fx.spring.wiki.ui.model.WikiPage;
 public interface WikiPageRepository extends JpaRepository<WikiPage, Long>{
 
 	List<WikiPage> findAllByNavigationId(Long navigationId);
+	
+	List<WikiPage> findAllByOrderByCreatedDesc();
 
 }
