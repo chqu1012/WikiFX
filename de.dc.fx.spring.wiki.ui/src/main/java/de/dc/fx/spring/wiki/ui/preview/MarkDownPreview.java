@@ -26,6 +26,8 @@ public class MarkDownPreview {
 				+ "<body>\n"
 				+ flexmarkContent
 				+ "</body>\n"
+				+ "<link rel=\"stylesheet\" href=\"" + getClass().getResource("amonition/admonition.css") + "\">\n"
+				+ "<script src=\"" + getClass().getResource("amonition/admonition.js") + "\"></script>\n"
 				+ "</html>");
 		return sb.toString();
 	}

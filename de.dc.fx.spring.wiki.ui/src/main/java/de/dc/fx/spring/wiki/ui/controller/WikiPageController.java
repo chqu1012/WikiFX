@@ -7,12 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.vladsch.flexmark.ast.Node;
+import com.vladsch.flexmark.ext.admonition.AdmonitionExtension;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
 import com.vladsch.flexmark.pdf.converter.PdfConverterExtension;
 import com.vladsch.flexmark.profiles.pegdown.Extensions;
 import com.vladsch.flexmark.profiles.pegdown.PegdownOptionsAdapter;
 import com.vladsch.flexmark.util.options.DataHolder;
+import com.vladsch.flexmark.util.options.MutableDataHolder;
 
 import de.dc.fx.spring.wiki.ui.model.NavigationModel;
 import de.dc.fx.spring.wiki.ui.model.WikiPage;
@@ -21,7 +23,6 @@ import de.dc.fx.spring.wiki.ui.repository.NavigationModelRepository;
 import de.dc.fx.spring.wiki.ui.util.WikiPageUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
@@ -40,12 +41,11 @@ public class WikiPageController extends BaseWikiPageController {
 	private Parser parser;
 	private HtmlRenderer renderer;
 	
-	static DataHolder OPTIONS = PegdownOptionsAdapter.flexmarkOptions(Extensions.ALL);
+	static DataHolder OPTIONS = PegdownOptionsAdapter.flexmarkOptions(Extensions.ALL, AdmonitionExtension.create());
 
 	@Override
 	public void initialize() {
 		super.initialize();
-		
 		parser = Parser.builder(OPTIONS).build();
 		renderer = HtmlRenderer.builder(OPTIONS).build();
 		textArea.textProperty().addListener(o ->parseContent());
@@ -102,5 +102,8 @@ public class WikiPageController extends BaseWikiPageController {
 			String html = renderer.render(document);
 			PdfConverterExtension.exportToPdf(file.getAbsolutePath(), preview.getContent(html),"", OPTIONS);
          }
+	}
+
+	@FXML public void onExportWordButton(ActionEvent event) {
 	}
 }

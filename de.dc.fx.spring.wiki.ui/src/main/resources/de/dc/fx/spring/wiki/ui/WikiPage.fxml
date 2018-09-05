@@ -30,7 +30,8 @@
                            </items>
                         </SplitPane>
                         <Button layoutX="872.0" layoutY="462.0" mnemonicParsing="false" onAction="#onSaveWikiPageButton" styleClass="btn" text="Speichern" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="8.0" />
-                        <Button layoutX="778.0" layoutY="457.0" mnemonicParsing="false" onAction="#onExportPdfButton" styleClass="btn" text="Export Pdf" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="120.0" />
+                        <Button layoutX="14.0" layoutY="457.0" mnemonicParsing="false" onAction="#onExportPdfButton" styleClass="btn" text="Export Pdf" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="5.0" />
+                        <Button layoutX="117.0" layoutY="457.0" mnemonicParsing="false" onAction="#onExportWordButton" styleClass="btn" text="Export Word" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="117.0" />
                      </children>
                   </AnchorPane>
             </content>
