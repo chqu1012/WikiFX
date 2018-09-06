@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.proudapes.jlatexmathfx.Control.LateXMathControl;
 import com.vladsch.flexmark.ast.Node;
 import com.vladsch.flexmark.ext.admonition.AdmonitionExtension;
 import com.vladsch.flexmark.ext.aside.AsideExtension;
@@ -22,11 +23,14 @@ import de.dc.fx.spring.wiki.ui.model.NavigationModel;
 import de.dc.fx.spring.wiki.ui.model.WikiPage;
 import de.dc.fx.spring.wiki.ui.preview.MarkDownPreview;
 import de.dc.fx.spring.wiki.ui.repository.NavigationModelRepository;
+import de.dc.fx.spring.wiki.ui.util.AnimatedZoomOperator;
 import de.dc.fx.spring.wiki.ui.util.WikiPageUtil;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -43,9 +47,12 @@ public class WikiPageController extends BaseWikiPageController {
 
 	private Parser parser;
 	private HtmlRenderer renderer;
+	private LateXMathControl latexControl = new LateXMathControl();
 	
 	static DataHolder OPTIONS = PegdownOptionsAdapter.flexmarkOptions(Extensions.ALL, AdmonitionExtension.create(), AsideExtension.create());
 
+	AnimatedZoomOperator zoomOperator = new AnimatedZoomOperator();
+	
 	@Override
 	public void initialize() {
 		super.initialize();
@@ -57,6 +64,21 @@ public class WikiPageController extends BaseWikiPageController {
 		parser = Parser.builder(OPTIONS).build();
 		renderer = HtmlRenderer.builder(OPTIONS).build();
 		textArea.textProperty().addListener(o ->parseContent());
+		
+		AnchorPane.setBottomAnchor(latexControl, 0d);
+		AnchorPane.setTopAnchor(latexControl, 0d);
+		AnchorPane.setLeftAnchor(latexControl, 0d);
+		AnchorPane.setRightAnchor(latexControl, 0d);
+		latexPane.getChildren().add(latexControl);
+		
+		latexPane.setOnScroll(event -> {
+		    double zoomFactor = 1.5;
+		    if (event.getDeltaY() <= 0) {
+		        // zoom out
+		        zoomFactor = 1 / zoomFactor;
+		    }
+		    zoomOperator.zoom(latexPane, zoomFactor, event.getSceneX(), event.getSceneY());
+		});
 	}
 	
 	@Override
@@ -70,6 +92,9 @@ public class WikiPageController extends BaseWikiPageController {
 
 	private void parseContent() {
         Node document = parser.parse(textArea.getText());
+        latexControl.setFormula(textArea.getText());
+        latexControl.layout();
+        latexControl.autosize();
         String html = renderer.render(document);
         String content = preview.getContent(html);
 		previewEngine.loadContent(content, "text/html");

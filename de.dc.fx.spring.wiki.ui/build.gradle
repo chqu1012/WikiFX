@@ -43,6 +43,8 @@ dependencies {
 	compile group: 'com.vladsch.flexmark', name: 'flexmark-all', version: '0.34.22'
 	compile group: 'org.docx4j', name: 'docx4j', version: '6.0.1'
 	
+	compile group: 'com.proudapes', name: 'jlatexmathfx', version: '0.3.2'
+	
     compile group: 'org.fxmisc.richtext', name: 'richtextfx', version: '0.9.1'
 	compile group: 'org.jfxtras', name: 'jfxtras-labs', version: '8.0-r5'
     compile group: 'commons-io', name: 'commons-io', version: '2.6'

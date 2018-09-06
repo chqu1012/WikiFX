@@ -36,9 +36,9 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Document Editor">
+          <Tab text="Latex">
           	<content>
-              <AnchorPane minHeight="0.0" minWidth="0.0">
+              <AnchorPane fx:id="latexPane" minHeight="0.0" minWidth="0.0">
                      <children>
                      </children>
                   </AnchorPane>
