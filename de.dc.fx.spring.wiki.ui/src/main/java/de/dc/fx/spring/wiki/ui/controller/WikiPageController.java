@@ -17,6 +17,7 @@ import com.vladsch.flexmark.profiles.pegdown.Extensions;
 import com.vladsch.flexmark.profiles.pegdown.PegdownOptionsAdapter;
 import com.vladsch.flexmark.util.options.DataHolder;
 
+import de.dc.fx.spring.wiki.ui.converter.DocxConvertor;
 import de.dc.fx.spring.wiki.ui.model.NavigationModel;
 import de.dc.fx.spring.wiki.ui.model.WikiPage;
 import de.dc.fx.spring.wiki.ui.preview.MarkDownPreview;
@@ -36,6 +37,7 @@ public class WikiPageController extends BaseWikiPageController {
 	@Autowired MarkDownPreview preview;
 	
 	@Autowired NavigationModelRepository navigationModelRepository;
+	@Autowired DocxConvertor docxConvertor;
 	
 	private WikiPage currentPage;
 
@@ -111,5 +113,12 @@ public class WikiPageController extends BaseWikiPageController {
 	}
 
 	@FXML public void onExportWordButton(ActionEvent event) {
+		 FileChooser fileChooser = new FileChooser();
+		 fileChooser.setInitialFileName("Export.docx");
+         fileChooser.setTitle("Save to word");
+         File file = fileChooser.showSaveDialog(new Stage());
+         if (currentPage!=null && file != null) {
+        	 docxConvertor.write(textArea.getText(), file);
+         }
 	}
 }
