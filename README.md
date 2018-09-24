@@ -1,2 +1,2 @@
 # WikiFX
-My small wiki application using markdown
+My lightweight file base wiki application. 
