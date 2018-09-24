@@ -14,3 +14,4 @@ A lightweight file base wiki application.
 * Docx4J
 * ControlsFX
 * FontAwesomeFX
+* Eclipse Modeling Framework
