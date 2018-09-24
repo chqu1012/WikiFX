@@ -6,7 +6,11 @@ A lightweight file base wiki application.
 * Latex formula
 * Html Rendering
 * Docx Export
-* Pdf Export
+
+## Planning Features 
+- [ ] Pdf Export
+- [ ] Git Revisions for text pages
+- [ ] Asciidoc Integration
 
 ## Using APIs:
 * Spring Framework
@@ -15,3 +19,4 @@ A lightweight file base wiki application.
 * ControlsFX
 * FontAwesomeFX
 * Eclipse Modeling Framework
+* JGit
