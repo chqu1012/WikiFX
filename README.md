@@ -1,2 +1,2 @@
 # WikiFX
-My lightweight file base wiki application. 
+A lightweight file base wiki application. 
